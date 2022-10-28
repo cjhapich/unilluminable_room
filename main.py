@@ -1,26 +1,4 @@
-# This code will establish the brightness of various points in the 4-sided Tokarski room
-
-### GAME PLAN ###
-
-# * Establish the boundaries of the room as a boolean 'crossed wall' function
-#   ~ Establish walls as line functions
-#     ~ NOTE!! Bottom walls go through the room, so need condition to check if x is in first or second half
-#   ~ Function takes particle x position, calculates all limiting y positions, and calls reflect if
-#     particle is outside
-# * Create photon object with attributes location, velocity, and in_bounds & functions move, reflect,
-#   wall cross, and floor cross
-#   X Location and velocity initialized with the object, then updated with move and reflect functions
-#  !! Move function updates location by stepping in velocity (the smaller the steps the better because
-#     this is only producing the end scatter points--no accuracy/frame number tradeoff)
-#   X Reflect function is activated when in_bounds is false and takes velocity vector and wall normal vector
-#     and returns new velocity vector
-#     ~     v2 = v1 - 2*(v1 dot n)*n      where n is normalized wall vector pointing inward
-#   X Wall cross works as described above
-#   X Floor cross checks z-dimension sign. If negative, removes particle and returns velocity to
-#     scatter list
-# * Simulate N photons with equal downward velocities and random planar velocities from random heights
-#   above the origin until the floor has been crossed, at which point return the location
-# * Plot the boundaries of the room as lines and the photon locations as scatter points
+# This code will establish the brightness of various points in the 4-sided Tokarsky room
 
 # Room is defined as a quadrilateral with a 120 degree vertex at the top and 10 degree vertices on the
 # left and right
@@ -98,7 +76,8 @@ def normalize(array):  # Normalize the x and y coordinates of a vector
     return array
 
 
-''' Simulate photon end points '''
+# Uncomment to simulate & save end positions of many photons
+''' Simulate photon end points 
 
 photon_num = 100000
 start_pos = []
@@ -141,8 +120,10 @@ plt.ylim([-0.1, 3])
 plt.xticks([]); plt.yticks([])
 #plt.savefig('Tokarsky_room100k_.png')
 plt.show()
+'''
 
-''' Track photon paths 
+# Uncomment to make a movie of photons
+''' Track photon paths '''
 
 photon_num = 1000
 start_pos = []
@@ -194,13 +175,14 @@ def animate(frame):
     return evol
 
 
-ani = animation.FuncAnimation(fig, animate, frames=30000, interval=10, init_func=init)
-ani.save('particles_long_small_step.mp4')
-'''
+ani = animation.FuncAnimation(fig, animate, frames=6000, interval=10, init_func=init)
+ani.save('particles.mp4')
 
+
+# Uncomment to make a movie of a ray
 ''' Simulate ray tracing 
 
-start_vel = [2, .85, 0]
+start_vel = [1, .425, 0] # Direction of ray--must be between slopes 0.36397 and 0.57735
 p1 = Photon([0, 0, 1], start_vel)
 
 plt.style.use('dark_background')
