@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import gaussian_kde
 
-end_positions = pd.read_csv('end_positions_small_step.csv', index_col=0)
+end_positions = pd.read_csv('end_positions_largest_step.csv', index_col=0)
 end_positions.columns = ['x', 'y', 'z']
 
 # Drop runaways
@@ -54,9 +54,10 @@ plt.scatter(projections_array[:, 0], y_new, color='y')
 plt.yscale('log')
 plt.xlabel('Room X-projection'); plt.ylabel('Log of normalized photon density')
 plt.title('Relative photon density distribution of Tokarsky room')
-plt.annotate('Light source', (0, 18.5), (1, 18.5), arrowprops={'arrowstyle': '->', 'color': 'white'})
-plt.annotate('"Unilluminable" spot', (10, 2.6), (7, 2.6), arrowprops={'arrowstyle': '->', 'color': 'white'})
-plt.savefig('normalized_density_small_step.png')
+plt.ylim([.07, 200])
+plt.annotate('Light source', (0, 160), (1, 160), arrowprops={'arrowstyle': '->', 'color': 'white'})
+plt.annotate('"Unilluminable" spot', (10, 5), (7, 5), arrowprops={'arrowstyle': '->', 'color': 'white'})
+plt.savefig('normalized_density_largest_step.png')
 plt.show()
 
 # Distribution after normalization should be continuous uniform--displacement confirms light or dark regions

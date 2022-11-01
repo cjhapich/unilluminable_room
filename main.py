@@ -77,7 +77,7 @@ def normalize(array):  # Normalize the x and y coordinates of a vector
 
 
 # Uncomment to simulate & save end positions of many photons
-''' Simulate photon end points 
+''' Simulate photon end points '''
 
 photon_num = 100000
 start_pos = []
@@ -104,7 +104,7 @@ for i in range(len(photons)):
     end_positions += [photons[i].position]
 end_positions = np.array(end_positions)
 positions_df = pd.DataFrame(end_positions)
-positions_df.to_csv('end_positions_small_step.csv')  # Written out for quicker analysis
+positions_df.to_csv('end_positions.csv')  # Written out for quicker analysis
 
 # Plot the shadow
 x1 = np.linspace(0, 5, 10)
@@ -118,12 +118,11 @@ plt.title('Photon Distribution in a Four-Sided Tokarsky Unilluminable Room')
 plt.xlim([-0.1, 10.1])
 plt.ylim([-0.1, 3])
 plt.xticks([]); plt.yticks([])
-#plt.savefig('Tokarsky_room100k_.png')
+plt.savefig('Tokarsky_room100k.png')
 plt.show()
-'''
 
 # Uncomment to make a movie of photons
-''' Track photon paths '''
+''' Track photon paths 
 
 photon_num = 1000
 start_pos = []
@@ -175,9 +174,9 @@ def animate(frame):
     return evol
 
 
-ani = animation.FuncAnimation(fig, animate, frames=6000, interval=10, init_func=init)
-ani.save('particles.mp4')
-
+ani = animation.FuncAnimation(fig, animate, frames=30000, interval=10, init_func=init)
+ani.save('particles_long.mp4')
+'''
 
 # Uncomment to make a movie of a ray
 ''' Simulate ray tracing 
@@ -186,7 +185,7 @@ start_vel = [1, .425, 0] # Direction of ray--must be between slopes 0.36397 and 
 p1 = Photon([0, 0, 1], start_vel)
 
 plt.style.use('dark_background')
-fig = plt.figure(figsize=(10, 3))
+fig = plt.figure(figsize=(20, 6))
 axis = plt.axes(xlim=(-0.1, 10.1), ylim=(-0.1, 3))
 line, = axis.plot([], [])
 xdata, ydata = [p1.position[0]], [p1.position[1]]
@@ -198,7 +197,8 @@ def init():
 
 
 def animate(frame):
-    p1.move(0.01)
+    for i in range(15):
+        p1.move(0.001)
     xdata.append(p1.position[0])
     ydata.append(p1.position[1])
     line.set_data(xdata, ydata)
@@ -214,7 +214,7 @@ plt.plot(x1, x1 * 0.57735 + 0.01, c='silver', linewidth=2); plt.plot(x1, x1 * 0.
 plt.plot(x2, x2 * -0.57735 + 5.7836, c='silver', linewidth=2)
 plt.plot(x2, x2 * -0.36397 + 3.6296, c='silver', linewidth=2)
 plt.xticks([]); plt.yticks([])
-anim = animation.FuncAnimation(fig, animate, init_func=init, interval=4, frames=7000)
+anim = animation.FuncAnimation(fig, animate, init_func=init, interval=10, frames=6000)
 
 anim.save('ray_trace.mp4')
 '''
